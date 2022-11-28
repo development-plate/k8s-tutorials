@@ -11,7 +11,7 @@ metadata:
   name: nginx-secret
   namespace: secret-and-consuming-as-env-variables
 data:
-  Key3: VEcxTVNHSlphSE5uVjFwM1RtbG1hWEZoVW05eVNEaFU=
+  Key3: VEcxTVNHSlphSE5uVjFwM1RtbG1hWEZoVW05eVNEaFU=   # <- echo -n 'TG1MSGJZaHNnV1p3TmlmaXFhUm9ySDhU' | base64
 type: Opaque
 ---
 apiVersion: v1

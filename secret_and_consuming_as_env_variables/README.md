@@ -12,6 +12,7 @@ File: [install.yaml](install.yaml)
 
 ```text
 # kubectl -n secret-and-consuming-as-env-variables exec -it nginx -- env
+
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=nginx
 TERM=xterm
