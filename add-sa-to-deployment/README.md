@@ -6,6 +6,8 @@
 kubectl apply -f install.yaml
 ```
 
+File: [install.yaml](install.yaml)
+
 ## Checks
 
 ```text
