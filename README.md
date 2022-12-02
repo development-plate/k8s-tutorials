@@ -9,3 +9,5 @@ Secret and Consuming It as Environment Variables [link](secret-and-consuming-as-
 Add SecurityContext to Pod [link](add-add-securitycontext-to-pod/README.md)
 
 Add ResourceQuota [link](add-resourcequota/README.md)
+
+API Deprecations [link](api-deprecations/README.md)
