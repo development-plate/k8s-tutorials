@@ -23,7 +23,19 @@ Service Account:  default
 
 Ok, that's wrong. We have already installed a SA with name 'deploy-sa'.
 
-## Solution
+## Solution 1
+
+Use kubectl set serviceaccount command. See [more](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-em-serviceaccount-em--1).
+
+```text
+kubectl -n add-sa-to-deployment set serviceaccount deployment nginx deploy-sa
+
+deployment.apps/nginx serviceaccount updated
+
+
+```
+
+## Solution 2
 
 ```text
 $ kubectl -n add-sa-to-deployment get deployment nginx
