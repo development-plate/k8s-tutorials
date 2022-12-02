@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: myjob
+spec:
+  completions: 3              #add this
+  ttlSecondsAfterFinished: 60 # add this
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - sleep
+        - "5"
+        image: busybox
+        name: myjob
+        resources: {}
+      restartPolicy: Never      
+status: {}
