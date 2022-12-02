@@ -36,6 +36,7 @@ replicaset.apps/nginxsvc-5b5649fd6f   3         3         3       48s
 
 ## Solution and Verify
 
+
 ingress.yaml
 
 ```yaml
