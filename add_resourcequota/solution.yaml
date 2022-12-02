@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: add-resourcequota
+spec:
+  containers:
+  - image: nginx:1.18.0
+    name: nginx
+    resources:          # add this
+      requests:         # add this
+        cpu: "0.5"      # add this
+        memory: "512"   # add this
+      limits:           # add this
+        cpu: "1"        # add this
+        memory: "1024"  # add this
