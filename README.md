@@ -29,3 +29,4 @@ Author: Michael Plate
 ## Services and Networking
 
 - Creating Services [link](services-networking/creating-services/README.md)
+- Managing Ingress [link](services-networking/managing-ingress/README.md)
