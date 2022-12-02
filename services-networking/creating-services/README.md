@@ -12,117 +12,130 @@ File: [install.yaml](install.yaml)
 
 ## Task
 
-We see a rolling update strategy in action.
+Creating a service
 
 ## Checks
 
 ```text
-kubectl get deploy bluelabel -o yaml | grep -4 strategy:
+kubectl get all
 
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: bluelabel
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+No resources found in creating-services namespace.
 ```
 
 ## Solution and Verify
 
 ```text
-kubectl scale deploy bluelabel --replicas=4
+# kubectl create deployment nginxsvc --image=nginx
 
-deployment.apps/bluelabel scaled
+deployment.apps/nginxsvc created
 
-kubectl get all --selector app=bluelabel
+# kubectl scale deployment nginxsvc --replicas=3
 
-NAME                             READY   STATUS    RESTARTS   AGE
-pod/bluelabel-5996d849cb-5mvn5   1/1     Running   0          4s
-pod/bluelabel-5996d849cb-bhw56   1/1     Running   0          20s
-pod/bluelabel-5996d849cb-k7pm7   1/1     Running   0          4s
-pod/bluelabel-5996d849cb-kvl65   1/1     Running   0          4s
+deployment.apps/nginxsvc scaled
 
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/bluelabel   4/4     4            4           20s
+# kubectl expose deployment nginxsvc --port=80
 
-NAME                                   DESIRED   CURRENT   READY   AGE
-replicaset.apps/bluelabel-5996d849cb   4         4         4       20s
+service/nginxsvc exposed
 
-kubectl set env deploy bluelabel type=blended
+# kubectl describe svc nginxsvc
 
-deployment.apps/bluelabel env updated
+Name:              nginxsvc
+Namespace:         creating-services
+Labels:            app=nginxsvc
+Annotations:       <none>
+Selector:          app=nginxsvc
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.109.60.2
+IPs:               10.109.60.2
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         192.168.205.242:80,192.168.35.90:80,192.168.45.236:80      # <-- look here. IP Address of Pods
+Session Affinity:  None
+Events:            <none>
 
-kubectl get all --selector app=bluelabel
+# kubectl get svc nginxsvc -o=yaml
 
-NAME                             READY   STATUS              RESTARTS   AGE
-pod/bluelabel-5996d849cb-5mvn5   1/1     Running             0          28s
-pod/bluelabel-5996d849cb-bhw56   1/1     Running             0          44s
-pod/bluelabel-5996d849cb-k7pm7   1/1     Running             0          28s
-pod/bluelabel-759cdb6f4-95ptl    0/1     ContainerCreating   0          1s
-pod/bluelabel-759cdb6f4-hnqwc    0/1     ContainerCreating   0          1s
+# kubectl get svc,ep
 
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/bluelabel   3/4     2            3           44s
+NAME               TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+service/nginxsvc   ClusterIP   10.109.60.2   <none>        80/TCP    3m5s
 
-NAME                                   DESIRED   CURRENT   READY   AGE
-replicaset.apps/bluelabel-5996d849cb   3         3         3       44s
-replicaset.apps/bluelabel-759cdb6f4    2         2         0       1s
+NAME                 ENDPOINTS                                               AGE
+endpoints/nginxsvc   192.168.205.242:80,192.168.35.90:80,192.168.45.236:80   3m5s
 
+# kubectl exec -it nginxsvc-6f45cc47b4-crpck -- sh
 
-kubectl set image deployment bluelabel nginx=nginx:1.14.0
+And run inside of container:
 
-deployment.apps/bluelabel image updated
+# curl 192.168.205.242:80
 
-kubectl get all --selector app=bluelabel
-NAME                             READY   STATUS              RESTARTS   AGE
-pod/bluelabel-65bcfbc7db-dzpbj   0/1     ContainerCreating   0          2s
-pod/bluelabel-65bcfbc7db-zmj6w   0/1     ContainerCreating   0          2s
-pod/bluelabel-759cdb6f4-8gg9n    1/1     Running             0          105s
-pod/bluelabel-759cdb6f4-hnqwc    1/1     Running             0          108s
-pod/bluelabel-759cdb6f4-qqcg8    1/1     Running             0          105s
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+</html>
 
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/bluelabel   3/4     2            3           2m31s
+# curl 10.109.60.2:80
 
-NAME                                   DESIRED   CURRENT   READY   AGE
-replicaset.apps/bluelabel-5996d849cb   0         0         0       2m31s
-replicaset.apps/bluelabel-65bcfbc7db   2         2         0       2s
-replicaset.apps/bluelabel-759cdb6f4    3         3         3       108s
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+</html>
 
-kubectl rollout history deployment bluelabel
+Leave container
+# exit
 
-deployment.apps/bluelabel
-REVISION  CHANGE-CAUSE
-1         <none>
-2         <none>
-3         <none>
+kubectl edit svc nginxsvc
+```
 
-kubectl rollout undo deployment bluelabel --to-revision=2
-deployment.apps/bluelabel rolled back
+```yaml
+spec:
+  clusterIP: 10.109.60.2
+  clusterIPs:
+  - 10.109.60.2
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 32000        # add nodePort: 32000
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginxsvc
+  sessionAffinity: None
+  type: NodePort           # change from ClusterIP to NodePort
+```
 
-kubectl get all --selector app=bluelabel
-NAME                            READY   STATUS    RESTARTS   AGE
-pod/bluelabel-759cdb6f4-8tspk   1/1     Running   0          5s
-pod/bluelabel-759cdb6f4-fp8br   1/1     Running   0          7s
-pod/bluelabel-759cdb6f4-qrvmz   1/1     Running   0          7s
-pod/bluelabel-759cdb6f4-vjq2s   1/1     Running   0          5s
+```text
+# kubectl get svc,ep
 
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/bluelabel   4/4     4            4           4m50s
+NAME               TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+service/nginxsvc   NodePort   10.109.60.2   <none>        80:32000/TCP   17m
 
-NAME                                   DESIRED   CURRENT   READY   AGE
-replicaset.apps/bluelabel-5996d849cb   0         0         0       4m50s
-replicaset.apps/bluelabel-65bcfbc7db   0         0         0       2m21s
-replicaset.apps/bluelabel-759cdb6f4    4         4         4       4m7s
+NAME                 ENDPOINTS                                               AGE
+endpoints/nginxsvc   192.168.205.242:80,192.168.35.90:80,192.168.45.236:80   17m
 
-kubectl rollout history deployment bluelabel
+# kubectl get pod -o wide
 
-deployment.apps/bluelabel
-REVISION  CHANGE-CAUSE
-1         <none>
-3         <none>
-4         <none>
+NAME                        READY   STATUS    RESTARTS   AGE   IP                NODE        NOMINATED NODE   READINESS GATES
+nginxsvc-6f45cc47b4-crpck   1/1     Running   0          21m   192.168.205.242   kubenode1   <none>           <none>
+nginxsvc-6f45cc47b4-hgx64   1/1     Running   0          22m   192.168.35.90     kubenode2   <none>           <none>
+nginxsvc-6f45cc47b4-hmrk2   1/1     Running   0          21m   192.168.45.236    kubenode3   <none>           <none>
+
+# curl kubenode1:32000
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+</html>
 ```
