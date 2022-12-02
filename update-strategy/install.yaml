@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: update-strategy
+spec: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: bluelabel
+  name: bluelabel
+  namespace: update-strategy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bluelabel
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: bluelabel
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
