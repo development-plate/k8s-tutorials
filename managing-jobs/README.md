@@ -36,7 +36,7 @@ spec:
 ...
 ```
 
-````text
+```text
 kubectl apply -f myjob.yaml
 ```
 

@@ -14,3 +14,4 @@ API Deprecations [link](api-deprecations/README.md)
 
 Managing Jobs [link](managing-jobs/README.md)
 
+Managing Cronjobs [link](managing-cronjobs/README.md)
