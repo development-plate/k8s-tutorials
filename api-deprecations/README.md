@@ -36,21 +36,15 @@ autoscaling/v2
 ```
 
 ```yaml
+apiVersion: apps/v1 # change here
+...
 ```
 
 ````text
-$ kubectl -n secret-and-consuming-as-env-variables delete pod nginx
-
-$ kubectl -n secret-and-consuming-as-env-variables apply -f edit.yaml
+kubectl apply -f redis-deployment.yaml
 ```
 
 ## Verify
 
 ```text
-kubectl -n secret-and-consuming-as-env-variables exec -it nginx -- env
-
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-HOSTNAME=nginx
-TERM=xterm
-KEY3=TG1MSGJZaHNnV1p3TmlmaXFhUm9ySDhU # <-- Bingo!!!
 ```
