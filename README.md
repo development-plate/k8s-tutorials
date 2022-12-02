@@ -1,19 +1,29 @@
 # Kubernetes Tutorials
 
-## Tasks
+Author: Michael Plate
 
-Add ServiceAccount to Deployment [link](add-sa-to-deployment/README.md)
+## Application Design and Build
 
-Secret and Consuming It as Environment Variables [link](secret-and-consuming-as-env-variables/README.md)
+- Managing Jobs [link](managing-jobs/README.md)
 
-Add SecurityContext to Pod [link](add-add-securitycontext-to-pod/README.md)
+- Managing Cronjobs [link](managing-cronjobs/README.md)
 
-Add ResourceQuota [link](add-resourcequota/README.md)
+## Application Deployment
 
-API Deprecations [link](api-deprecations/README.md)
+- Update Strategy [link](update-strategy/README.md)
 
-Managing Jobs [link](managing-jobs/README.md)
+## Appication observability and maintenance
 
-Managing Cronjobs [link](managing-cronjobs/README.md)
+- API Deprecations [link](api-deprecations/README.md)
 
-Update Strategy [link](update-strategy/README.md)
+## Application Environment, Configuration and Security
+
+- Add ResourceQuota [link](add-resourcequota/README.md)
+
+- Secret and Consuming It as Environment Variables [link](secret-and-consuming-as-env-variables/README.md)
+
+- Add ServiceAccount to Deployment [link](add-sa-to-deployment/README.md)
+
+- Add SecurityContext to Pod [link](add-add-securitycontext-to-pod/README.md)
+
+## Services and Networking
