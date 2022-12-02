@@ -8,7 +8,10 @@ kubectl apply -f install.yaml
 kubectl config set-context --current --namespace=managing-ingress
 ```
 
-File: [install.yaml](install.yaml)
+Files:
+
+- [install.yaml](install.yaml)
+- [ingress.yaml](ingress.yaml)
 
 ## Task
 
@@ -32,6 +35,30 @@ replicaset.apps/nginxsvc-5b5649fd6f   3         3         3       48s
 ```
 
 ## Solution and Verify
+
+ingress.yaml
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginxsvc-ingress
+  namespace: managing-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /*
+        pathType: Prefix
+        backend:
+          service:
+            name: nginxsvc
+            port:
+              number: 80
+```
 
 ```text
 # kubectl expose deployment nginxsvc --port=80 --type=NodePort
