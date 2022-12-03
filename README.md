@@ -12,11 +12,13 @@ Author: Michael Plate
 
 - Update Strategy [link](application-deployment/update-strategy/README.md)
 
-## Appication observability and maintenance
+## Application observability and maintenance
 
 - API Deprecations [link](application-observability-and-maintenance/api-deprecations/README.md)
 
 ## Application Environment, Configuration and Security
+
+- Resource Limitations [link](application-environment-configuration-and-security/resource-limitations/README.md)
 
 - Add ResourceQuota [link](application-environment-configuration-and-security/add-resourcequota/README.md)
 
