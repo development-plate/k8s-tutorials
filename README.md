@@ -18,6 +18,8 @@ Author: Michael Plate
 
 - Update Strategy [link](application-deployment/update-strategy/README.md)
 
+- Implementing Blue/Green Deployments [link](application-deployment/implementing-bluegreen-deployments/README.md)
+
 ## Application observability and maintenance
 
 - API Deprecations [link](application-observability-and-maintenance/api-deprecations/README.md)
