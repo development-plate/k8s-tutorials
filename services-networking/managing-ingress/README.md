@@ -86,4 +86,11 @@ replicaset.apps/nginxsvc-5b5649fd6f   3         3         3       4m3s   nginx  
 ingress.networking.k8s.io/nginxsvc-ingress configured
 
 curl kubemaster:30607
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+</html>
 ```
