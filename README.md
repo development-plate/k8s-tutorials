@@ -8,6 +8,10 @@ Author: Michael Plate
 
 - Managing Cronjobs [link](application-design-and-build/managing-cronjobs/README.md)
 
+- Multi-Container Pods [link](application-design-and-build/multi-container-pods/README.md)
+
+- Sidecar Pattern [link](application-design-and-build/sidecar-pattern/README.md)
+
 ## Application Deployment
 
 - Update Strategy [link](application-deployment/update-strategy/README.md)

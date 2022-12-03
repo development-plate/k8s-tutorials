@@ -11,7 +11,6 @@ kubectl config set-context --current --namespace=multi-container-pods
 Files:
 
 - [install.yaml](install.yaml)
-- [solution.yaml](solution.yaml)
 
 ## Checks
 
@@ -41,4 +40,7 @@ Containers:
 /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
 10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+
+
+# kubectl exec -it multi-container -c busybox -- sh
 ```
