@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: init-containers
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-containers-pod
+  labels:
+    app: init-containers-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: workdir
+      mountPath: /usr/share/nginx/html
+
+  initContainers:
+  - name: install
+    image: busybox
+    command: ['sh','-c','echo Hello World! > /work-dir/index.html']
+    volumeMounts:
+    - name: workdir
+      mountPath: "/work-dir"
+  dnsPolicy: Default
+  volumes:
+  - name: workdir
+    emptyDir: {}

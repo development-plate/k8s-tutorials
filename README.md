@@ -12,6 +12,8 @@ Author: Michael Plate
 
 - Sidecar Pattern [link](application-design-and-build/sidecar-pattern/README.md)
 
+- Init Containers [link](application-design-and-build/init-container/README.md)
+
 ## Application Deployment
 
 - Update Strategy [link](application-deployment/update-strategy/README.md)
