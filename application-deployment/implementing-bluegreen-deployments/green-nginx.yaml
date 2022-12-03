@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: green-nginx
+  name: green-nginx
+  namespace: implementing-bluegreen-deployments
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: green-nginx
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: green-nginx
+    spec:
+      containers:
+      - image: nginx:1.15
+        name: nginx
+        resources: {}
+status: {}
