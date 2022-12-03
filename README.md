@@ -20,6 +20,8 @@ Author: Michael Plate
 
 - Implementing Blue/Green Deployments [link](application-deployment/implementing-bluegreen-deployments/README.md)
 
+- Implement Canary Deployments [link](application-deployment/implement-canary-deployments/README.md)
+
 ## Application observability and maintenance
 
 - API Deprecations [link](application-observability-and-maintenance/api-deprecations/README.md)
