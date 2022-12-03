@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: network-policy
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: network-policy
+  name: nginx
+  labels: 
+    app: nginx
+spec:
+  containers:
+  - name: nwp-nginx
+    image: nginx:1.17
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: network-policy
+  name: busybox
+  labels:
+    app: sleepy
+spec:
+  containers:
+  - name: nwp-busybox
+    image: busybox
+    command:
+    - sleep
+    - "3600"
