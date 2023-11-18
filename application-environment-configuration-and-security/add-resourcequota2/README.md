@@ -12,7 +12,7 @@ namespace/add-resourcequota2 created
 
 File: [install.yaml](install.yaml)
 
-## Set context to namespace
+### Set context to namespace
 
 ```text
 kubectl config set-context --namespace=add-resourcequota2 --current
@@ -22,7 +22,7 @@ output
 Context "kubernetes-admin@kubernetes" modified.
 ```
 
-## Set Quota
+### Set Quota
 
 ```text
 kubectl create quota qtest --hard pods=3,cpu=100m,memory=500Mi
@@ -185,7 +185,7 @@ replicaset.apps/nginx-7854ff8877   2         0         0       23m
 ```
 
 ```text
-kubectl scale deploy nginx --replicas=3
+kubectl scale deploy nginx --replicas=4
 ```
 ```text
 kubectl get all
@@ -204,3 +204,5 @@ NAME                               DESIRED   CURRENT   READY   AGE
 replicaset.apps/nginx-5c68f7c87    4         3         3       14m
 replicaset.apps/nginx-7854ff8877   0         0         0       24m
 ```
+
+Repeat the last command with replicas=3 and you have correct number again.
