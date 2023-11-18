@@ -123,9 +123,74 @@ Resource Quotas
   Name:     qtest
   Resource  Used  Hard
   --------  ---   ---
-  cpu       100m  100m
+  cpu       100m  100m    # <-- We have no more cpu.
   memory    5Mi   500Mi
   pods      1     3
 
 No LimitRange resource.
+```
+
+You can fix this steps:
+
+```text
+kubectl edit quota qtest
+```
+
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  creationTimestamp: "2023-11-18T15:50:14Z"
+  name: qtest
+  namespace: add-resourcequota2
+  resourceVersion: "28629"
+  uid: d47faa5b-dc28-4179-bff5-537985a5bb45
+spec:
+  hard:
+    cpu: 500m   # <- chnage this from 100m to 500m
+    memory: 500Mi
+    pods: "3"
+status:
+  hard:
+    cpu: 100m
+    memory: 500Mi
+    pods: "3"
+  used:
+    cpu: 100m
+    memory: 5Mi
+    pods: "1"
+```
+
+```text
+kubectl get all
+
+output:
+NAME                        READY   STATUS    RESTARTS   AGE
+pod/nginx-5c68f7c87-r9f4r   1/1     Running   0          13m
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   1/3     1            1           23m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-5c68f7c87    2         1         1       13m
+replicaset.apps/nginx-7854ff8877   2         0         0       23m
+```
+
+```text
+kubectl scale deploy nginx --replicas=3
+
+kubectl get all
+
+output:
+NAME                        READY   STATUS    RESTARTS   AGE
+pod/nginx-5c68f7c87-9cvsv   1/1     Running   0          3s
+pod/nginx-5c68f7c87-qvd6j   1/1     Running   0          3s
+pod/nginx-5c68f7c87-r9f4r   1/1     Running   0          14m
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   3/4     3            3           24m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-5c68f7c87    4         3         3       14m
+replicaset.apps/nginx-7854ff8877   0         0         0       24m
 ```
