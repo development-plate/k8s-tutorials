@@ -4,7 +4,8 @@
 
 ```text
 kubectl apply -f install.yaml
-
+```
+```text
 output:
 namespace/add-resourcequota2 created
 ```
@@ -14,9 +15,9 @@ File: [install.yaml](install.yaml)
 ## Set context to namespace
 
 ```text
-kubectl config set-context --namespace=add-resourcequota2 --cur
-rent
-
+kubectl config set-context --namespace=add-resourcequota2 --current
+```
+```text
 output
 Context "kubernetes-admin@kubernetes" modified.
 ```
@@ -25,7 +26,8 @@ Context "kubernetes-admin@kubernetes" modified.
 
 ```text
 kubectl create quota qtest --hard pods=3,cpu=100m,memory=500Mi
-
+```
+```text
 output:
 resourcequota/qtest created
 ```
@@ -34,7 +36,8 @@ resourcequota/qtest created
 
 ```text
 kubectl create deploy nginx --image=nginx --replicas=3
-
+```
+```text
 deployment.apps/nginx created
 ```
 
@@ -43,7 +46,8 @@ deployment.apps/nginx created
 
 ```text
 kubectl get all
-
+```
+```text
 output:
 NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/nginx   0/3     0            0           3m50s
@@ -53,12 +57,12 @@ replicaset.apps/nginx-7854ff8877   3         0         0       3m50s
 ```
 
 You see no pods here. What is the reason?
+Check the replicaset.
 
 ```text
-# check replicaset
-
 kubectl describe rs nginx-7854ff8877
-
+```
+```text
 output:
 ...
 Conditions:
@@ -86,7 +90,8 @@ You must specify the cpu and memory for nginx.
 
 ```text
 kubectl set resources deploy nginx --requests cpu=100m,memory=5Mi --limits cpu=200m,memory=20Mi
-
+```
+```text
 output:
 deployment.apps/nginx resource requirements updated
 ```
@@ -95,7 +100,8 @@ deployment.apps/nginx resource requirements updated
 
 ```text
 kubectl get all
-
+```
+```text
 output:
 NAME                        READY   STATUS    RESTARTS   AGE
 pod/nginx-5c68f7c87-r9f4r   1/1     Running   0          29s
@@ -112,7 +118,8 @@ You see only one pod and not three. Check the Quota with this command.
 
 ```text
 kubectl describe ns add-resourcequota2
-
+```
+```text
 output:
 Name:         add-resourcequota2
 Labels:       kubernetes.io/metadata.name=add-resourcequota2
@@ -163,7 +170,8 @@ status:
 
 ```text
 kubectl get all
-
+```
+```text
 output:
 NAME                        READY   STATUS    RESTARTS   AGE
 pod/nginx-5c68f7c87-r9f4r   1/1     Running   0          13m
@@ -178,9 +186,11 @@ replicaset.apps/nginx-7854ff8877   2         0         0       23m
 
 ```text
 kubectl scale deploy nginx --replicas=3
-
+```
+```text
 kubectl get all
-
+```
+```text
 output:
 NAME                        READY   STATUS    RESTARTS   AGE
 pod/nginx-5c68f7c87-9cvsv   1/1     Running   0          3s
