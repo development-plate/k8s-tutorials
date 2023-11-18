@@ -32,6 +32,8 @@ Author: Michael Plate
 
 - Add ResourceQuota [link](application-environment-configuration-and-security/add-resourcequota/README.md)
 
+- Add ResourceQuota 2 [link](application-environment-configuration-and-security/add-resourcequota2/README.md)
+
 - Secret and Consuming It as Environment Variables [link](application-environment-configuration-and-security/secret-and-consuming-as-env-variables/README.md)
 
 - Add ServiceAccount to Deployment [link](application-environment-configuration-and-security/add-sa-to-deployment/README.md)

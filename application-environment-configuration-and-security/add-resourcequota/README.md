@@ -15,7 +15,7 @@ kubectl apply -f pod_without_resource_requirements.yaml
 
 pod/nginx created
 
-kubectl -n add-resourcequota create quota resource-quota --hard=cpu=1,memory=1G,pods=2
+kubectl -n add-resourcequota create quota resource-quota --hard cpu=1,memory=1G,pods=2
 
 kubectl -n add-resourcequota delete pod nginx
 
