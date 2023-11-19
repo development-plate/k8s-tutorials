@@ -47,3 +47,7 @@ Author: Michael Plate
 - Managing Ingress [link](services-networking/managing-ingress/README.md)
 
 - Network Policy [link](services-networking/network-policy/README.md)
+
+## Storage
+
+- Creating Storage [link](storage/create-storage/README.md)
